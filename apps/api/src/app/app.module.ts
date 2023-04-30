@@ -1,12 +1,38 @@
+import { PetsModule } from './pets/pets.module';
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
+import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
-import { ConfigurationModule } from '@nx-nest-typeorm-graphql/common';
+import {
+  ConfigurationModule,
+  ConfigurationService,
+} from '@nx-nest-typeorm-graphql/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { OwnerModule } from './owner/owner.module';
 
 @Module({
-  imports: [ConfigurationModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    PetsModule,
+    ConfigurationModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'apps/api/src/schema.gql'),
+    }),
+    TypeOrmModule.forRootAsync({
+      useFactory: async (configurationService: ConfigurationService) => ({
+        type: 'postgres',
+        url: configurationService.POSTGRES_DB_URL,
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
+      inject: [ConfigurationService],
+    }),
+    OwnerModule,
+  ],
+  controllers: [],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}

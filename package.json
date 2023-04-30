@@ -2,7 +2,9 @@
   "name": "nx-nest-typeorm-graphql",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "nx run-many --target=serve --all=true --parallel=true"
+  },
   "private": true,
   "dependencies": {
     "@apollo/server": "^4.7.0",
@@ -14,6 +16,8 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
     "axios": "^1.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "graphql": "^16.6.0",
     "joi": "^17.9.2",
     "pg": "^8.10.0",
