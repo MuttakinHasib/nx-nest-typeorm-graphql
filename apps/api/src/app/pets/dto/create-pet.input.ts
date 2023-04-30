@@ -8,6 +8,11 @@ export class CreatePetInput {
   @Field()
   name: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @Field()
+  ownerId: string;
+
   @Field({ nullable: true })
   type?: string;
 }

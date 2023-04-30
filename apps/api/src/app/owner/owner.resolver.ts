@@ -9,18 +9,20 @@ export class OwnerResolver {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Mutation(() => Owner)
-  createOwner(@Args('createOwnerInput') createOwnerInput: CreateOwnerInput) {
-    return this.ownerService.create(createOwnerInput);
+  async createOwner(
+    @Args('createOwnerInput') createOwnerInput: CreateOwnerInput
+  ) {
+    return await this.ownerService.create(createOwnerInput);
   }
 
-  @Query(() => [Owner], { name: 'owner' })
-  findAll() {
-    return this.ownerService.findAll();
+  @Query(() => [Owner], { name: 'owners' })
+  async findAll() {
+    return await this.ownerService.findAll();
   }
 
   @Query(() => Owner, { name: 'owner' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.ownerService.findOne(id);
+  async findOne(@Args('id', { type: () => String }) id: string) {
+    return await this.ownerService.findOne(id);
   }
 
   @Mutation(() => Owner)

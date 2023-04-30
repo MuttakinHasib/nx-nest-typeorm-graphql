@@ -6,14 +6,14 @@ import { Pet } from '../../pets/entity/pet.entity';
 @ObjectType()
 export class Owner {
   @PrimaryGeneratedColumn('uuid')
-  @Field()
+  @Field(() => String)
   id: string;
 
+  @Field(() => String)
   @Column()
-  @Field()
   name: string;
 
-  @OneToMany(() => Pet, (pet) => pet.owner, { cascade: true })
+  @OneToMany(() => Pet, (pet) => pet.owner)
   @Field(() => [Pet], { nullable: true })
-  pets: Pet[];
+  pets?: Pet[];
 }
