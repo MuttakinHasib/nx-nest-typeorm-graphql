@@ -16,12 +16,72 @@ type Owner {
   pets: [Pet!]
 }
 
+type Transaction {
+  id: String!
+  type: TransactionType!
+  amount: Int!
+  client: Client!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAW
+  TRANSFER
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Banker {
+  id: String!
+  first_name: String!
+  last_name: String!
+  email: String!
+  card_number: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  employee_number: String!
+  clients: [Client!]!
+}
+
+type Client {
+  id: String!
+  first_name: String!
+  last_name: String!
+  email: String!
+  card_number: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  balance: Int!
+  is_active: Boolean!
+  additional_info: AdditionalInfo
+  family_members: [String!]!
+  transactions: [Transaction!]!
+  bankers: [Banker!]!
+}
+
+type AdditionalInfo {
+  age: Int!
+  address: String!
+  phone: String!
+}
+
 type Query {
   getData: String!
   findOne(id: String!): Pet!
   pets: [Pet!]!
   owners: [Owner!]!
   owner(id: String!): Owner!
+  clients: [Client!]!
+  client(id: Int!): Client!
+  bankers: [Banker!]!
+  banker(id: Int!): Banker!
+  transactions: [Transaction!]!
+  transaction(id: Int!): Transaction!
 }
 
 type Mutation {
@@ -29,6 +89,15 @@ type Mutation {
   createOwner(createOwnerInput: CreateOwnerInput!): Owner!
   updateOwner(updateOwnerInput: UpdateOwnerInput!): Owner!
   removeOwner(id: Int!): Owner!
+  createClient(createClientInput: CreateClientInput!): Client!
+  updateClient(updateClientInput: UpdateClientInput!): Client!
+  removeClient(id: Int!): Client!
+  createBanker(createBankerInput: CreateBankerInput!): Banker!
+  updateBanker(updateBankerInput: UpdateBankerInput!): Banker!
+  removeBanker(id: Int!): Banker!
+  createTransaction(createTransactionInput: CreateTransactionInput!): Transaction!
+  updateTransaction(updateTransactionInput: UpdateTransactionInput!): Transaction!
+  removeTransaction(id: Int!): Transaction!
 }
 
 input CreatePetInput {
@@ -43,5 +112,38 @@ input CreateOwnerInput {
 
 input UpdateOwnerInput {
   name: String
+  id: Int!
+}
+
+input CreateClientInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateClientInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateBankerInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateBankerInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateTransactionInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateTransactionInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
 }

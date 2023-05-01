@@ -12,6 +12,9 @@ import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OwnerModule } from './owner/owner.module';
+import { ClientsModule } from './clients/clients.module';
+import { BankersModule } from './bankers/bankers.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -31,6 +34,9 @@ import { OwnerModule } from './owner/owner.module';
       inject: [ConfigurationService],
     }),
     OwnerModule,
+    ClientsModule,
+    BankersModule,
+    TransactionsModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],
