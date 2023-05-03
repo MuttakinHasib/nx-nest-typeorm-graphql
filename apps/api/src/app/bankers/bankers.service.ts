@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBankerInput } from './dto/create-banker.input';
 import { UpdateBankerInput } from './dto/update-banker.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Banker } from './entities/banker.entity';
 
 @Injectable()
 export class BankersService {
-  create(createBankerInput: CreateBankerInput) {
-    return 'This action adds a new banker';
+  constructor(
+    @InjectRepository(Banker)
+    private readonly bankersRepository: Repository<Banker>
+  ) {}
+
+  async create(createBankerInput: CreateBankerInput) {
+    const banker = this.bankersRepository.create(createBankerInput);
+    return await this.bankersRepository.save(banker);
   }
 
   findAll() {

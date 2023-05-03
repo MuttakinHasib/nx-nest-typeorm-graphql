@@ -9,10 +9,10 @@ export class ClientsResolver {
   constructor(private readonly clientsService: ClientsService) {}
 
   @Mutation(() => Client)
-  createClient(
+  async createClient(
     @Args('createClientInput') createClientInput: CreateClientInput
   ) {
-    return this.clientsService.create(createClientInput);
+    return await this.clientsService.create(createClientInput);
   }
 
   @Query(() => [Client], { name: 'clients' })

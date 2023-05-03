@@ -9,10 +9,10 @@ export class BankersResolver {
   constructor(private readonly bankersService: BankersService) {}
 
   @Mutation(() => Banker)
-  createBanker(
+  async createBanker(
     @Args('createBankerInput') createBankerInput: CreateBankerInput
   ) {
-    return this.bankersService.create(createBankerInput);
+    return await this.bankersService.create(createBankerInput);
   }
 
   @Query(() => [Banker], { name: 'bankers' })

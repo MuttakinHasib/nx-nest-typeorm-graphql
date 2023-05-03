@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateClientInput } from './dto/create-client.input';
 import { UpdateClientInput } from './dto/update-client.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Client } from './entities/client.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ClientsService {
-  create(createClientInput: CreateClientInput) {
-    return 'This action adds a new client';
+  constructor(
+    @InjectRepository(Client)
+    private readonly clientsRepository: Repository<Client>
+  ) {}
+
+  async create(createClientInput: CreateClientInput) {
+    const client = this.clientsRepository.create(createClientInput);
+    return await this.clientsRepository.save(client);
   }
 
   findAll() {

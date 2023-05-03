@@ -116,24 +116,34 @@ input UpdateOwnerInput {
 }
 
 input CreateClientInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  first_name: String!
+  last_name: String!
+  email: String!
+  card_number: String!
 }
 
 input UpdateClientInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  first_name: String
+  last_name: String
+  email: String
+  card_number: String
   id: Int!
 }
 
 input CreateBankerInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  first_name: String!
+  last_name: String!
+  email: String!
+  card_number: String!
+  employee_number: String!
 }
 
 input UpdateBankerInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  first_name: String
+  last_name: String
+  email: String
+  card_number: String
+  employee_number: String
   id: Int!
 }
 
